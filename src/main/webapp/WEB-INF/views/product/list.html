@@ -12,22 +12,18 @@
 </form>
 <br>
 
-<!--<form th:action="@{/products/search}">-->
-<!--    <div class="searchPrice">-->
-<!--        <lable for="price"><h5>Tìm kiếm chi tiết</h5></lable>-->
-<!--        <input id="price" type="number" name="min" size="50" placeholder="Nhập giá thấp nhất">-->
-<!--        <input for="price" type="number" name="max" size="50" placeholder="Nhập giá cao nhất">-->
-<!--        <select  id="category" name="categoryId">-->
-<!--            <option selected value="">&#45;&#45;&#45;&#45;Tất cả sản phẩm&#45;&#45;&#45;&#45;</option>-->
-<!--            <option th:each="category:${categories}"-->
-<!--                    th:value="${category.id}"-->
-<!--                    th:text="${category.name}">-->
-
-<!--            </option>-->
-<!--        </select>-->
-<!--        <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>-->
-<!--    </div>-->
-<!--</form>-->
+<form th:action="@{/products/search}">
+    <div class="searchPrice">
+        <lable for="price"><h5>Tìm kiếm chi tiết</h5></lable>
+        <select  id="category" name="categoryId">
+            <option th:each="category:${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+        <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</form>
 <br>
 <lable for="create"><h5>Thêm mới sản phẩm</h5></lable>
 <a id="create" th:href="@{/products/create}">

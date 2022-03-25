@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/product/layout::head"></head>
+<body>
+<div th:replace="/product/layout::header"></div>
+<form th:action="@{/products}">
+    <div class="search">
+        <lable for="name"><h5>Tìm kiếm sản phẩm</h5></lable>
+        <input type="text" size="50" id="name" name="name" th:value="${name}" >
+        <button for="name" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</form>
+<br>
+
+<form th:action="@{/products/search}">
+    <div class="searchPrice">
+        <lable for="price"><h5>Tìm kiếm chi tiết</h5></lable>
+        <select  id="category" name="categoryId">
+            <option th:each="category:${categories}"
+                    th:value="${category.id}"
+                    th:text="${category.name}">
+            </option>
+        </select>
+        <button class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+</form>
+<br>
+<lable for="create"><h5>Thêm mới sản phẩm</h5></lable>
+<a id="create" th:href="@{/products/create}">
+    <button class="btn btn-primary"><i class="fa-solid fa-plus"></i></button></a>
+<br>
+<br>
+<center>
+    <div class="page">
+        <a th:href="@{'/products/search'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">
+            <button class="btn btn-primary"><i class="fa-solid fa-angles-left"></i></button></a>
+        <span th:text= "${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+        <a th:href="@{'/products/search'(page=${products.number + 1})}" th:if="${products.hasNext()}">
+            <button class="btn btn-primary"><i class="fa-solid fa-angles-right"></i></button></a>
+    </div>
+</center>
+
+<br>
+<fieldset>
+    <legend><h3>DANH SÁCH SẢN PHẨM</h3></legend>
+    <table class="table table-success table-striped">
+        <tr>
+            <th>STT</th>
+            <th>Ảnh sản phẩm</th>
+            <th>Tên sản phẩm</th>
+            <th>Loại sản phẩm</th>
+            <th>Giá(VND)</th>
+            <th>Số lượng</th>
+            <th>Mô tả</th>
+            <th>Sửa/Xóa</th>
+        </tr>
+        <tr th:each="product,productStatus : ${products}">
+            <td th:text="${productStatus.count}"></td>
+            <td><img th:src="@{/image/__${product.image}__}" alt="Ảnh sản phẩm" width="100" height="100"></td>
+            <td><a th:href="@{/products/view/__${product.id}__}" th:text="${product.name}"></a></td>
+            <td th:text="${product.category.getName()}"></td>
+            <td th:text="${product.price}"></td>
+            <td th:text="${product.quantity}"></td>
+            <td th:text="${product.description}"></td>
+            <td>
+                <a th:href="@{/products/edit/__${product.id}__}">
+                    <button class="btn btn-primary"><i class="fa-solid fa-file-pen"></i></button></a>
+                <a th:href="@{/products/delete/__${product.id}__}">
+                    <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button></a>
+            </td>
+        </tr>
+
+
+    </table>
+</fieldset>
+</body>
+</html>

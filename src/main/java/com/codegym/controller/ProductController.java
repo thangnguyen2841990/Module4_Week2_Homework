@@ -8,6 +8,7 @@ import com.codegym.service.product.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -34,9 +36,11 @@ public class ProductController {
         return categoryService.findAll(pageable);
     }
 
+
     @GetMapping
-    private ModelAndView showAllProduct(String name, Pageable pageable) {
-        if (name == null) {
+    private ModelAndView showAllProduct(String name,Optional<Integer> page) {
+       Pageable pageable = PageRequest.of(page.orElse(0),10);
+        if (name == null ) {
             Page<Product> products = this.productService.findAll(pageable);
             ModelAndView modelAndView = new ModelAndView("/product/list");
             modelAndView.addObject("products", products);
@@ -153,5 +157,16 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("/product/view");
         modelAndView.addObject("product",product.get());
         return modelAndView;
+    }
+
+    @GetMapping("/search")
+    private ModelAndView showAllProductByCategory(Long categoryId) {
+        if (categoryId != null) {
+            Page<Product> products = this.productService.findByCategory(categoryId);
+            ModelAndView modelAndView = new ModelAndView("/product/list");
+            modelAndView.addObject("products", products);
+            return modelAndView;
+        }
+        return null;
     }
 }
