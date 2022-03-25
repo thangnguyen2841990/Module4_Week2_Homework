@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/product/layout::head"></head>
+<body>
+<div th:replace="/product/layout::header"></div>
+<form method="post" >
+    <fieldset>
+        <legend><h3>XÓA SẢN PHẨM</h3></legend>
+
+        <div class="input-info">
+            <lable for="category"><h5>Loại sản phẩm</h5></lable>
+            <input type="text" id="category" disabled th:value="${product.category.getName()}">
+        </div>
+        <div class="input-info">
+            <lable for="name"><h5>Tên sản phẩm</h5></lable>
+            <input type="text" disabled id="name" th:value="${product.name}">
+        </div>
+        <div class="input-info">
+            <lable for="price"><h5>Giá</h5></lable>
+            <input type="text" disabled id="price" th:value="${product.price}">
+        </div>
+        <div class="input-info">
+            <lable for="quantity"><h5>Số lượng</h5></lable>
+            <input type="text" disabled id="quantity" th:value="${product.quantity}">
+        </div>
+        <div class="input-info">
+            <lable for="description"><h5>Mô tả</h5></lable>
+            <input type="text" disabled id="description" th:value="${product.description}">
+        </div>
+        <div class="input-info">
+            <lable for="image"><h5>Ảnh sản phẩm</h5></lable>
+            <img th:src="@{/image/__${product.image}__}" width="100" height="100">
+        </div>
+
+        <button class="btn btn-danger">Xác nhận</button>
+    </fieldset>
+
+</form>
+</body>
+</html>
